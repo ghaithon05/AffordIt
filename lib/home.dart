@@ -1,4 +1,6 @@
+import 'package:affordit/budget.dart';
 import 'package:flutter/material.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -8,6 +10,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Budget b = Budget(income: 200, bills: 50, monthlySavings: 50);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,8 +18,8 @@ class _HomeState extends State<Home> {
         title: const Text('AffordIt'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(''),
+      body: Center(
+        child: Text('$b'),
       ),
     );
   }
