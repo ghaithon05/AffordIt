@@ -1,6 +1,7 @@
-import 'package:affordit/budget.dart';
+import 'package:affordit/widget.dart';
 import 'package:flutter/material.dart';
-
+import 'budget.dart';
+import 'widget.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,7 +11,29 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Budget b = Budget(income: 200, bills: 50, monthlySavings: 50);
+  Budget budget = Budget();
+  double _income = 0, _bills = 0, _savings = 0;
+
+  void updateIncome(String text) {
+    _income = parseNumber(text);
+  }
+
+  void updateBills(String text) {
+    _bills = parseNumber(text);
+  }
+
+  void updateSavings(String text) {
+    _savings = parseNumber(text);
+  }
+
+  void calculate() {
+    setState(() {
+      budget.income = _income;
+      budget.bills = _bills;
+      budget.monthlySavings = _savings;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +42,25 @@ class _HomeState extends State<Home> {
         centerTitle: true,
       ),
       body: Center(
-        child: Text('$b'),
+        child: Column(
+          children: [
+            const SizedBox(height: 20.0),
+            MyTextField(f: updateIncome, hint: 'Monthly income'),
+            const SizedBox(height: 20.0),
+            MyTextField(f: updateBills, hint: 'Rent and bills'),
+            const SizedBox(height: 20.0),
+            MyTextField(f: updateSavings, hint: 'Savings per month'),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                calculate();
+              },
+              child: const Text('Calculate', style: TextStyle(fontSize: 24.0)),
+            ),
+            const SizedBox(height: 20.0),
+            Text('$budget'),
+          ],
+        ),
       ),
     );
   }
